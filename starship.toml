@@ -1,0 +1,115 @@
+#blank line between shell prompts
+add_newline = true
+
+format = """
+${custom.os_icon}\
+$username\
+$hostname\
+$shlvl\
+$kubernetes\
+${custom.trim_directory_4}\
+${custom.trim_directory_5}\
+$directory\
+$vcsh\
+$git_branch\
+$git_commit\
+$git_state\
+$git_metrics\
+$git_status\
+$hg_branch\
+$docker_context\
+$package\
+$cmake\
+$dart\
+$deno\
+$dotnet\
+$elixir\
+$elm\
+$erlang\
+$golang\
+$helm\
+$java\
+$julia\
+$kotlin\
+$nim\
+$nodejs\
+$ocaml\
+$perl\
+$php\
+$purescript\
+$python\
+$red\
+$ruby\
+$rust\
+$scala\
+$swift\
+$terraform\
+$vlang\
+$vagrant\
+$zig\
+$nix_shell\
+$conda\
+$memory_usage\
+$aws\
+$gcloud\
+$openstack\
+$env_var\
+$crystal\
+$cmd_duration\
+$line_break\
+$lua\
+$jobs\
+$battery\
+$time\
+$status\
+$shell\
+$character"""
+
+#[line_break]
+#disabled = true
+
+[character]
+success_symbol = "[➜](bold green)"
+error_symbol = "[x](bold red)"
+
+[username]
+format = "[$user](bold bright-blue)@"
+show_always = true
+
+[hostname]
+ssh_only = false
+format = "[$hostname](bold red):"
+disabled = false
+
+[cmd_duration]
+disabled = true
+
+[directory]
+truncation_symbol = "/"
+truncation_length = 2
+truncate_to_repo = false
+home_symbol = "~"
+style = "bold bright-green"
+
+#custom command to shorten directories to a shortened form;
+#4 and 5 are meant to play around with the pwd size
+#examples:
+#/lib/modules/.../net/wireless/mediatek
+#~/Documents/.../ExampleRepo/Tests
+[custom.trim_directory_4]
+command = "/home/jonah/Documents/StarshipConfig/trim_dir.sh 0"
+when = '[[ $(rg -o "/" <<< "$(pwd)" | wc -l) -eq 4 ]]'
+format = "[$output](bold bright-green)"
+
+[custom.trim_directory_5]
+command = "/home/jonah/Documents/StarshipConfig/trim_dir.sh 0"
+when = '[[ $(rg -o "/" <<< "$(pwd)" | wc -l) -ge 5 ]]'
+format = "[$output/...](bold bright-green)"
+
+[custom.os-icon]
+disabled = false
+command = "/opt/os-icon"
+format = "[$symbol($output )](bold white)"
+symbol = ""
+when = "true"
+shell = ["bash", "--noprofile", "--norc"]
